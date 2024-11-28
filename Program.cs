@@ -19,9 +19,9 @@ builder.Services.AddSignalR();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
-    options.Cookie.HttpOnly = true; // Make the session cookie HttpOnly
-    options.Cookie.IsEssential = true; // Ensure session cookie is essential
+    options.IdleTimeout = TimeSpan.FromMinutes(30); 
+    options.Cookie.HttpOnly = true; 
+    options.Cookie.IsEssential = true; 
 });
 
 var app = builder.Build();
