@@ -2,8 +2,8 @@
 {
     public class DoctorLoginViewModel
     {
-        public string Username { get; set; } = string.Empty; // or `required` modifier in C# 11+
-        public string Password { get; set; } = string.Empty; // or `required` modifier in C# 11+
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty; 
 
     }
 }
