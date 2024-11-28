@@ -10,7 +10,7 @@ namespace JKLHealthcare.Data
         {
         }
 
-        // Define DbSets for each of your models
+        // Define DbSets for each models
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Caregiver> Caregivers { get; set; }
@@ -21,7 +21,7 @@ namespace JKLHealthcare.Data
             modelBuilder.Entity<Patient>()
                 .HasKey(p => p.PatientId);
 
-            // Add other model configurations if needed
+            
         }
     }
 }
