@@ -1,0 +1,15 @@
+# Exclude Visual Studio temporary files, build results, and folders
+.vs/
+*.user
+*.suo
+
+# Build directories
+bin/
+obj/
+
+# Git-specific files
+.git/
+
+# Logs and temporary files
+*.log
+*.tmp

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JKLHealthcare")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b537fe4b94fe3ccefb9b5e4b6940a9a4cb330d0f")]
 [assembly: System.Reflection.AssemblyProductAttribute("JKLHealthcare")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JKLHealthcare")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
