@@ -22,7 +22,7 @@ namespace JKLHealthcare.Controllers
             _hubContext = hubContext;
         }
 
-        // GET: /Doctor/Login
+       
         public IActionResult Login()
         {
             return View();
@@ -34,10 +34,10 @@ namespace JKLHealthcare.Controllers
             // Authenticate with specific username and password
             if (ModelState.IsValid && model.Username == "jklhealthcare" && model.Password == "health")
             {
-                // Set a session variable indicating the doctor is logged in
+                
                 HttpContext.Session.SetString("DoctorLoggedIn", "true");
 
-                // Redirect to Dashboard
+               
                 return RedirectToAction("Dashboard");
             }
 
@@ -45,21 +45,21 @@ namespace JKLHealthcare.Controllers
             return View(model);
         }
 
-        // GET: /Doctor/Dashboard
+        //Doctor/Dashboard
         public IActionResult Dashboard()
         {
-            // Check if doctor is logged in
+            
             if (HttpContext.Session.GetString("DoctorLoggedIn") != "true")
             {
                 return RedirectToAction("Login");
             }
 
-            // Load patient appointments and caregiver availability
+            // Loads patient appointments and caregiver availability
             var appointments = _context.Appointments
-                .Include(a => a.Patient) // Ensure Patient details are loaded
+                .Include(a => a.Patient)
                 .ToList();
 
-            var caregivers = _context.Caregivers.ToList(); // Assuming you have a Caregiver model
+            var caregivers = _context.Caregivers.ToList(); 
 
             var viewModel = new DoctorDashboardViewModel
             {
@@ -73,7 +73,7 @@ namespace JKLHealthcare.Controllers
         [HttpPost]
         public async Task<IActionResult> AssignCaregiver(int appointmentId, int caregiverId)
         {
-            // Check if doctor is logged in
+           
             if (HttpContext.Session.GetString("DoctorLoggedIn") != "true")
             {
                 return RedirectToAction("Login");
@@ -85,7 +85,7 @@ namespace JKLHealthcare.Controllers
                 appointment.CaregiverId = caregiverId;
                 await _context.SaveChangesAsync();
 
-                // Send real-time notification to the patient
+                // Sends real-time notification to the patient
                 await _hubContext.Clients.User(appointment.PatientId.ToString())
                     .SendAsync("ReceiveNotification", "Your caregiver has been assigned.");
 
@@ -98,7 +98,7 @@ namespace JKLHealthcare.Controllers
         [HttpPost]
         public async Task<IActionResult> RescheduleAppointment(int appointmentId, DateTime newDateTime)
         {
-            // Check if doctor is logged in
+            
             if (HttpContext.Session.GetString("DoctorLoggedIn") != "true")
             {
                 return RedirectToAction("Login");
@@ -110,7 +110,7 @@ namespace JKLHealthcare.Controllers
                 appointment.AppointmentDateTime = newDateTime;
                 await _context.SaveChangesAsync();
 
-                // Send real-time notification to the patient
+                // Sends real-time notification to the patient
                 await _hubContext.Clients.User(appointment.PatientId.ToString())
                     .SendAsync("ReceiveNotification", "Your appointment has been rescheduled.");
 
@@ -120,10 +120,10 @@ namespace JKLHealthcare.Controllers
             return NotFound();
         }
 
-        // GET: /Doctor/AddCaregiver
+        
         public IActionResult AddCaregiver()
         {
-            // Check if doctor is logged in
+            
             if (HttpContext.Session.GetString("DoctorLoggedIn") != "true")
             {
                 return RedirectToAction("Login");
@@ -132,12 +132,12 @@ namespace JKLHealthcare.Controllers
             return View();
         }
 
-        // POST: /Doctor/AddCaregiver
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddCaregiver(Caregiver caregiver)
         {
-            // Check if doctor is logged in
+           
             if (HttpContext.Session.GetString("DoctorLoggedIn") != "true")
             {
                 return RedirectToAction("Login");
@@ -147,10 +147,10 @@ namespace JKLHealthcare.Controllers
             {
                 _context.Caregivers.Add(caregiver);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Dashboard"); // Redirect back to the dashboard after adding the caregiver
+                return RedirectToAction("Dashboard"); 
             }
 
-            return View(caregiver); // Return to the form if validation fails
+            return View(caregiver); 
         }
     }
 }
