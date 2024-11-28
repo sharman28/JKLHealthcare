@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JKLHealthcare.Migrations
 {
-    /// <inheritdoc />
+   
     public partial class AddAppointmentsAndCaregivers : Migration
     {
-        /// <inheritdoc />
+        
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -65,7 +65,7 @@ namespace JKLHealthcare.Migrations
                 column: "PatientId");
         }
 
-        /// <inheritdoc />
+        
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
