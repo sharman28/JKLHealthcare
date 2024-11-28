@@ -4,10 +4,10 @@
 
 namespace JKLHealthcare.Migrations
 {
-    /// <inheritdoc />
+  
     public partial class MakeCaregiverIdNullable : Migration
     {
-        /// <inheritdoc />
+       
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
@@ -35,7 +35,7 @@ namespace JKLHealthcare.Migrations
                 principalColumn: "Id");
         }
 
-        /// <inheritdoc />
+       
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
