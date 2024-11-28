@@ -1,0 +1,73 @@
+﻿@model JKLHealthcare.Models.DoctorDashboardViewModel
+@{
+    ViewData["Title"] = "Doctor Dashboard";
+}
+
+<h2>Doctor Dashboard</h2>
+
+<h3>Appointments</h3>
+<table>
+    <tr>
+        <th>Patient Name</th>
+        <th>Appointment Date</th>
+        <th>Assign Caregiver</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var appointment in Model.Appointments)
+    {
+        <tr>
+            <td>@appointment.Patient.FullName</td>
+            <td>@appointment.AppointmentDateTime.ToString("f")</td> <!-- Formats datetime to a readable format -->
+            <td>
+                @if (appointment.Caregiver != null)
+                {
+                    <!-- Display assigned caregiver's name -->
+                    <span>@appointment.Caregiver.Name</span>
+                }
+                else
+                {
+                    <!-- Display dropdown to assign caregiver if none is assigned -->
+                    <form asp-action="AssignCaregiver" method="post" onsubmit="return confirm('Are you sure you want to assign this caregiver?');">
+                        <input type="hidden" name="appointmentId" value="@appointment.AppointmentId" />
+                        <select name="caregiverId" required>
+                            <option value="">Select Caregiver</option>
+                            @foreach (var caregiver in Model.Caregivers)
+                            {
+                                <option value="@caregiver.Id">@caregiver.Name</option>
+                            }
+                        </select>
+                        <button type="submit">Assign</button>
+                    </form>
+                }
+            </td>
+            <td>
+                <form asp-action="RescheduleAppointment" method="post" onsubmit="return confirm('Are you sure you want to reschedule this appointment?');">
+                    <input type="hidden" name="appointmentId" value="@appointment.AppointmentId" />
+                    <input type="datetime-local" name="newDateTime" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
+                    <button type="submit">Reschedule</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<!-- Add Caregiver Button -->
+<div style="margin-top: 20px;">
+    <a asp-action="AddCaregiver" class="btn btn-primary">Add New Caregiver</a>
+</div>
+
+<!-- SignalR client-side script for real-time notifications -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.18/signalr.min.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/notificationHub")
+        .build();
+
+    connection.on("ReceiveNotification", function (message) {
+        alert(message);
+    });
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+</script>

@@ -1,0 +1,19 @@
+﻿@model JKLHealthcare.Models.Caregiver
+
+<h2>Add New Caregiver</h2>
+
+<form asp-action="AddCaregiver" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Specialization"></label>
+        <input asp-for="Specialization" class="form-control" />
+        <span asp-validation-for="Specialization" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Add Caregiver</button>
+    </div>
+</form>

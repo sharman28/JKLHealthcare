@@ -1,0 +1,23 @@
+﻿@model JKLHealthcare.Models.Appointment
+
+<h2>Book an Appointment</h2>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label asp-for="AppointmentDateTime"></label>
+        <input asp-for="AppointmentDateTime" type="datetime-local" required />
+        <span asp-validation-for="AppointmentDateTime" class="text-danger"></span>
+    </div>
+
+    <!-- Hidden input for PatientId to ensure it's included in the form submission -->
+    <input type="hidden" asp-for="PatientId" value="@ViewData["PatientId"]" />
+
+    <div>
+        <button type="submit" class="btn btn-primary">Book</button>
+    </div>
+</form>
+
+<!-- Client-side validation -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

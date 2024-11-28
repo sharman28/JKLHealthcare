@@ -1,0 +1,45 @@
+﻿@model JKLHealthcare.Models.Patient
+
+<div style="padding: 20px;">
+    <h2>Welcome, @Model.FirstName @Model.LastName!</h2>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Phone Number:</strong> @Model.Number</p>
+    <p><strong>Date of Birth:</strong> @Model.DateOfBirth.ToShortDateString()</p>
+    <p><strong>Address:</strong> @Model.Address</p>
+
+    <div style="margin-top: 20px;">
+        <a href="/Appointments/Create" style="padding: 10px 20px; text-decoration: none; border: none; border-radius: 5px; background-color: #007bff; color: white;">Book Appointment</a>
+        <a href="/Patients/Edit" style="padding: 10px 20px; text-decoration: none; border: none; border-radius: 5px; background-color: #28a745; color: white;">Edit Profile</a>
+        <a href="/Patients/Logout" style="padding: 10px 20px; text-decoration: none; border: none; border-radius: 5px; background-color: #dc3545; color: white;">Logout</a>
+    </div>
+
+    <div style="margin-top: 40px;">
+        <h3>Appointments</h3>
+        @if (Model.Appointments != null && Model.Appointments.Any())
+        {
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <thead>
+                    <tr style="background-color: #f2f2f2;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">Date</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Time</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appointment in Model.Appointments)
+                    {
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">@appointment.AppointmentDateTime.ToShortDateString()</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">@appointment.AppointmentDateTime.ToShortTimeString()</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">@appointment.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No appointments scheduled.</p>
+        }
+    </div>
+</div>
