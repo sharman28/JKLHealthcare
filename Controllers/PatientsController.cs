@@ -19,20 +19,20 @@ namespace JKLHealthcare.Controllers
             _passwordHasher = new PasswordHasher<Patient>();
         }
 
-        // GET: Patients/Register
+        
         public IActionResult Register()
         {
             return View();
         }
 
-        // POST: Patients/Register
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Register(Patient patient)
         {
             if (ModelState.IsValid)
             {
-                // Hash the password before saving it
+                // Hashes the password before saving it
                 patient.Password = _passwordHasher.HashPassword(patient, patient.Password);
                 _context.Patients.Add(patient);
                 _context.SaveChanges();
@@ -43,13 +43,13 @@ namespace JKLHealthcare.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Login
+       
         public IActionResult Login()
         {
             return View();
         }
 
-        // POST: Patients/Login
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Login(string email, string password)
@@ -57,7 +57,7 @@ namespace JKLHealthcare.Controllers
             var patient = _context.Patients.FirstOrDefault(p => p.Email == email);
             if (patient != null)
             {
-                // Verify the hashed password
+                // Verifies the hashed password
                 var result = _passwordHasher.VerifyHashedPassword(patient, patient.Password, password);
                 if (result == PasswordVerificationResult.Success)
                 {
@@ -69,7 +69,7 @@ namespace JKLHealthcare.Controllers
             return View();
         }
 
-        // GET: Patients/Dashboard
+        
         public IActionResult Dashboard()
         {
             var patientEmail = HttpContext.Session.GetString("PatientEmail");
@@ -90,7 +90,7 @@ namespace JKLHealthcare.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Profile
+       
         public IActionResult Profile(int id)
         {
             var patient = _context.Patients
@@ -105,14 +105,14 @@ namespace JKLHealthcare.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Logout
+       
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: Patients/Edit
+        
         public IActionResult Edit()
         {
             var patientEmail = HttpContext.Session.GetString("PatientEmail");
@@ -130,7 +130,7 @@ namespace JKLHealthcare.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Edit
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Patient updatedPatient)
@@ -145,13 +145,13 @@ namespace JKLHealthcare.Controllers
                     return NotFound();
                 }
 
-                // Update properties with new values
+               
                 patient.Email = updatedPatient.Email;
                 patient.Number = updatedPatient.Number;
                 patient.DateOfBirth = updatedPatient.DateOfBirth;
                 patient.Address = updatedPatient.Address;
 
-                // Handle password update securely
+                // Handles the password update securely
                 if (!string.IsNullOrEmpty(updatedPatient.Password))
                 {
                     patient.Password = _passwordHasher.HashPassword(patient, updatedPatient.Password);
@@ -160,7 +160,7 @@ namespace JKLHealthcare.Controllers
                 _context.Patients.Update(patient);
                 _context.SaveChanges();
 
-                // Update session if the email was changed
+                
                 if (patientEmail != updatedPatient.Email)
                 {
                     HttpContext.Session.SetString("PatientEmail", patient.Email);
